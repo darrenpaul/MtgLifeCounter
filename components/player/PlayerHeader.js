@@ -1,12 +1,14 @@
 import React from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 import Icon from 'react-native-vector-icons/dist/FontAwesome5';
 
-const PlayerHealth = ({playerName}) => {
+const PlayerHeader = ({playerName, showPlayerSettingsFn}) => {
   return (
     <View style={styles.container}>
       <Text style={styles.text}>{playerName}</Text>
-      <Icon style={styles.icon} name="user-cog" size={30} />
+      <TouchableOpacity onPress={showPlayerSettingsFn}>
+        <Icon style={styles.icon} name="user-cog" size={30} />
+      </TouchableOpacity>
     </View>
   );
 };
@@ -29,4 +31,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default PlayerHealth;
+export default PlayerHeader;

@@ -26,6 +26,8 @@ const styles = StyleSheet.create({
   },
   text: {
     color: '#fff',
+    fontFamily: 'Luminari-Regular',
+    fontSize: 30,
   },
 });
 

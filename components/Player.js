@@ -9,10 +9,11 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/dist/FontAwesome5';
 
-import PlayerSettings from './player/PlayerSettings';
+import PlayerHeader from './player/PlayerHeader';
 import PlayerHealth from './player/PlayerHealth';
 import PlayerMana from './player/PlayerMana';
 import ManaSettingsModal from './player/ManaSettingsModal';
+import PlayerSettingsModal from './player/PlayerSettingsModal';
 
 const images = {
   mountain: {
@@ -27,6 +28,8 @@ const images = {
 
 const Player = ({playerState, isFlipped, updatePlayerFn}) => {
   const [manaModalVisible, setManaModalVisible] = useState(false);
+  const [playerSettingsModalVisible, setPlayerSettingsModalVisible] =
+    useState(false);
 
   const addLifePoint = () => {
     const newPlayerData = {...playerState};
@@ -49,12 +52,24 @@ const Player = ({playerState, isFlipped, updatePlayerFn}) => {
     updatePlayerFn({...playerState, manaPool: newManaPool});
   };
 
+  const showPlayerSettingsModal = () => {
+    setPlayerSettingsModalVisible(true);
+  };
+
+  const closePlayerSettingsModal = newPlayerState => {
+    setPlayerSettingsModalVisible(false);
+    updatePlayerFn({...playerState, ...newPlayerState});
+  };
+
   return (
     <View style={isFlipped ? styles.flippedContainer : styles.container}>
       <ImageBackground
         style={styles.backgroundImage}
         source={images[playerState.background].uri}>
-        <PlayerSettings playerName={playerState.name} />
+        <PlayerHeader
+          playerName={playerState.name}
+          showPlayerSettingsFn={showPlayerSettingsModal}
+        />
 
         <PlayerHealth
           playerHealth={playerState.health}
@@ -76,6 +91,19 @@ const Player = ({playerState, isFlipped, updatePlayerFn}) => {
         <ManaSettingsModal
           closeModalFn={closeManaModal}
           manaPool={playerState.manaPool}
+        />
+      </Modal>
+
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={playerSettingsModalVisible}
+        onRequestClose={() => {
+          setDieModalVisible(!playerSettingsModalVisible);
+        }}>
+        <PlayerSettingsModal
+          closeModalFn={closePlayerSettingsModal}
+          playerName={(playerState.name, playerState.color)}
         />
       </Modal>
     </View>

@@ -6,7 +6,6 @@ import {
   TouchableOpacity,
   ImageBackground,
   Image,
-  Pressable,
 } from 'react-native';
 
 import ManaPoolController from './ManaPoolController';
@@ -50,11 +49,11 @@ const ManaSettings = ({manaPool, closeModalFn}) => {
           updateManaPoolFn={updateManaPool}
         />
 
-        <Pressable
+        <TouchableOpacity
           style={styles.button}
           onPress={() => closeModalFn(currentManaPool)}>
           <Text style={styles.buttonText}>Save</Text>
-        </Pressable>
+        </TouchableOpacity>
       </View>
     </ImageBackground>
   );
